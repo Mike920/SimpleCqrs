@@ -11,7 +11,7 @@ namespace MessageApp.Application.Contacts
     public class GetContactsQueryHandler : IRequestHandler<GetContactsQuery, List<ContactDto>>
     {
         private readonly IContactRepository _contactRepository;
-
+         
         public GetContactsQueryHandler(IContactRepository contactRepository)
         {
             this._contactRepository = contactRepository;
