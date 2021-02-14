@@ -9,7 +9,7 @@ namespace MessageApp.Infrastructure.Context
 {
     public class Context : DbContext
     {
-        public Context([NotNull] DbContextOptions<Context> options) : base(options)
+        public Context(DbContextOptions<Context> options) : base(options)
         {
         }
 
