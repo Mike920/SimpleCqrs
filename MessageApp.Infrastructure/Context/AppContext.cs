@@ -7,9 +7,9 @@ using System.Text;
 
 namespace MessageApp.Infrastructure.Context
 {
-    public class Context : DbContext
+    public class AppContext : DbContext
     {
-        public Context(DbContextOptions<Context> options) : base(options)
+        public AppContext(DbContextOptions<AppContext> options) : base(options)
         {
         }
 
