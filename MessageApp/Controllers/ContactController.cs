@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using MediatR;
 using MessageApp.Application.Contacts;
@@ -22,8 +23,9 @@ namespace MessageApp.Controllers
         }
 
         // GET: api/<ContactController>
+        [ProducesResponseType(typeof(List<ContactDto>), (int)HttpStatusCode.OK)]
         [HttpGet]
-        public async Task<IEnumerable<ContactDto>> Get()
+        public async Task<IActionResult> Get()
         {
             var contacts = await _mediator.Send(new GetContactsQuery());
             return Ok(contacts);
