@@ -34,19 +34,10 @@ namespace MessageApp.Controllers
         public async Task<IActionResult> Get(MessageQuery data)
         {
             var result = await _mediator.Send(new GetMessagesQuery(data.ReceiverId, data.Content, data.PageNumber, data.PageSize, 
-                data.SortColumn, data.SortDescending, data.SenderId, data.SendDate, data.ReadDate));
+                data.SortColumn, data.SortDescending, data.SenderId, data.IsRead));
             return ApiContent(result);
         }
 
-        //// GET api/<MessageController>/5
-        //[HttpGet("{id}")]
-        //[ProducesResponseType(typeof(MessageDto), StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //public async Task<IActionResult> Get(int id)
-        //{
-        //    var result = await _mediator.Send(new GetMessageDetailsQuery(id));
-        //    return ApiContent(result);
-        //}
 
         // POST api/<MessageController>
         [HttpPost]
@@ -58,25 +49,25 @@ namespace MessageApp.Controllers
             return ApiContent(result);
         }
 
-        //// PUT api/<MessageController>/5
-        //[HttpPut("{messageId}")]
-        //[ProducesResponseType(typeof(int), StatusCodes.Status204NoContent)]
-        //[ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //public async Task<IActionResult> Put([FromRoute] int messageId, [FromBody] Message data)
-        //{
-        //    var result = await _mediator.Send(new UpdateMessageCommand(messageId, data.Name));
-        //    return ApiContent(result);
-        //}
+        // PUT api/<MessageController>/5
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(int), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> MarkAsRead([FromRoute] int id)
+        {
+            var result = await _mediator.Send(new MarkMessageAsReadCommand(id));
+            return ApiContent(result);
+        }
 
-        //// DELETE api/<MessageController>/5
-        //[HttpDelete("{id}")]
-        //[ProducesResponseType(typeof(int), StatusCodes.Status204NoContent)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    var result = await _mediator.Send(new DeleteMessageCommand(id));
-        //    return ApiContent(result);
-        //}
+        // DELETE api/<MessageController>/5
+        [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(int), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _mediator.Send(new DeleteMessageCommand(id));
+            return ApiContent(result);
+        }
     }
 }

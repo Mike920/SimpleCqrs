@@ -16,7 +16,7 @@ namespace MessageApp.Application.Messages
 {
     public class GetMessagesQuery : IRequest<Result<PaginatedList<MessageDto>>>
     {
-        public GetMessagesQuery(int? receiverId, string content, int pageNumber, int pageSize, string sortColumn, bool sortDescending, int? senderId, DateTime? sendDate, DateTime? readDate)
+        public GetMessagesQuery(int? receiverId, string content, int pageNumber, int pageSize, string sortColumn, bool sortDescending, int? senderId, bool? isRead)
         {
             ReceiverId = receiverId;
             Content = content;
@@ -25,8 +25,7 @@ namespace MessageApp.Application.Messages
             SortColumn = sortColumn;
             SortDescending = sortDescending;
             SenderId = senderId;
-            SendDate = sendDate;
-            ReadDate = readDate;
+            IsRead = isRead;
         }
 
         public int? ReceiverId { get; }
@@ -36,8 +35,7 @@ namespace MessageApp.Application.Messages
         public string SortColumn { get; }
         public bool SortDescending { get; }
         public int? SenderId { get; }
-        public DateTime? SendDate { get; }
-        public DateTime? ReadDate { get; }
+        public bool? IsRead { get; }
 
         public ValidationResult Validate() => new Validator().Validate(this);
 
@@ -49,7 +47,7 @@ namespace MessageApp.Application.Messages
 
                 RuleFor(x => x.PageNumber).GreaterThan(0);
                 RuleFor(x => x.PageSize).GreaterThan(0);
-                RuleFor(x => x.SortColumn).Must(x => sortableColumns.Contains(x))
+                RuleFor(x => x.SortColumn).Must(x => x == null || sortableColumns.Contains(x))
                     .WithMessage("'{PropertyName}' Only the following columns support sorting: " + string.Join(", ", sortableColumns));
             }
         }
@@ -72,7 +70,7 @@ namespace MessageApp.Application.Messages
                 return Result.UnprocessableEntity<PaginatedList<MessageDto>>(null, validationResult.ToString());
 
             var queryResult = (await _messageRepository.Query(request.ReceiverId, request.Content, request.PageNumber, request.PageSize, request.SortColumn,
-                request.SortDescending, request.SenderId, request.SendDate, request.ReadDate));
+                request.SortDescending, request.SenderId, request.IsRead));
 
             var messages = queryResult.Items.Select(x => new MessageDto(x.Id, x.Content, x.SendDate, x.ReadDate, x.Sender, x.Receiver)).ToList();
             var result = new PaginatedList<MessageDto>(messages, queryResult.TotalCount, queryResult.PageNumber, queryResult.TotalPages);

@@ -34,5 +34,7 @@ namespace MessageApp.Domain.Entities
         public int SenderId { get; private set; }
         [ForeignKey(nameof(SenderId))]
         public virtual Contact Sender { get; private set; }
+
+        public void MarkAsRead() => ReadDate = DateTime.Now;
     }
 }

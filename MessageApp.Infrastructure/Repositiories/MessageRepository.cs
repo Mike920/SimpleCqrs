@@ -45,10 +45,10 @@ namespace MessageApp.Infrastructure.Repositiories
             return await _context.Messages.AsNoTracking().ToListAsync();
         }
 
-        public async Task<PaginatedList<Message>> Query(int? receiverId, string content, int pageNumber, int pageSize, string sortColumn, bool sortDescending, int? senderId, DateTime? sendDate, DateTime? readDate)
+        public async Task<PaginatedList<Message>> Query(int? receiverId, string content, int pageNumber, int pageSize, string sortColumn, bool sortDescending, int? senderId, bool? isRead)
         {
             var source = _context.Messages
-                .Include(x => x.Receiver)
+                .Include(x => x.Sender)
                 .Include(x => x.Receiver)
                 .AsNoTracking();
 
@@ -58,10 +58,8 @@ namespace MessageApp.Infrastructure.Repositiories
                 source = source.Where(x => x.SenderId == senderId);
             if (!string.IsNullOrWhiteSpace(content))
                 source = source.Where(x => x.Content.Contains(content));
-            if (sendDate != null)
-                source = source.Where(x => x.SendDate == sendDate);
-            if (readDate != null)
-                source = source.Where(x => x.ReadDate == readDate);
+            if (isRead != null)
+                source = source.Where(x => x.ReadDate.HasValue == isRead);
 
             if (!string.IsNullOrWhiteSpace(sortColumn))
             {

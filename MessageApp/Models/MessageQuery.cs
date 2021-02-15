@@ -18,7 +18,6 @@ namespace MessageApp.Models
         public int? ReceiverId { get; set; }
         public int? SenderId { get; set; }
         public bool SortDescending { get; set; }
-        public DateTime? SendDate { get; set; }
-        public DateTime? ReadDate { get; set; }
+        public bool? IsRead { get; set; }
     }
 }

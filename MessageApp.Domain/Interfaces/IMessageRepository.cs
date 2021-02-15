@@ -14,6 +14,6 @@ namespace MessageApp.Domain.Interfaces
         Task<int> Create(Message message);
         Task Update(Message message);
         Task Delete(int id);
-        Task<PaginatedList<Message>> Query(int? contactId, string content, int pageNumber, int pageSize, string sortColumn, bool sortDescending, int? senderId, DateTime? sendDate, DateTime? readDate);
+        Task<PaginatedList<Message>> Query(int? contactId, string content, int pageNumber, int pageSize, string sortColumn, bool sortDescending, int? senderId, bool? isRead);
     }
 }
