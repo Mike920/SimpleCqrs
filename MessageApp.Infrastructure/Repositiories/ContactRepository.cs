@@ -11,9 +11,9 @@ namespace MessageApp.Infrastructure.Repositiories
 {
     public class ContactRepository : IContactRepository
     {
-        private readonly Context.AppContext _context;
+        private readonly Context.EntityContext _context;
 
-        public ContactRepository(Context.AppContext context)
+        public ContactRepository(Context.EntityContext context)
         {
             this._context = context ?? throw new ArgumentNullException(nameof(context));
         }

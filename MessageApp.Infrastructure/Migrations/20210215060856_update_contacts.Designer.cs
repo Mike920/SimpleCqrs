@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MessageApp.Infrastructure.Migrations
 {
-    [DbContext(typeof(AppContext))]
+    [DbContext(typeof(EntityContext))]
     [Migration("20210215060856_update_contacts")]
     partial class update_contacts
     {

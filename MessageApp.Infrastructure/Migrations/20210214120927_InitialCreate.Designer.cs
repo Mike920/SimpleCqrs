@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MessageApp.Infrastructure.Migrations
 {
-    [DbContext(typeof(AppContext))]
+    [DbContext(typeof(EntityContext))]
     [Migration("20210214120927_InitialCreate")]
     partial class InitialCreate
     {

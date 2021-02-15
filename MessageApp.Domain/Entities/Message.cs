@@ -11,11 +11,13 @@ namespace MessageApp.Domain.Entities
         protected Message()
         {
         }
-        public Message(int id, string content, int receiverId)
+        public Message(int id, string content, int receiverId, int senderId)
         {
             Id = id;
             Content = content;
             ReceiverId = receiverId;
+            SenderId = senderId;
+            SendDate = DateTime.Now;
         }
 
         public int Id { get; private set; }

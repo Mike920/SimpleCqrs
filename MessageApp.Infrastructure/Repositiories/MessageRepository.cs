@@ -13,9 +13,9 @@ namespace MessageApp.Infrastructure.Repositiories
 {
     public class MessageRepository : IMessageRepository
     {
-        private readonly Context.AppContext _context;
+        private readonly Context.EntityContext _context;
 
-        public MessageRepository(Context.AppContext context)
+        public MessageRepository(Context.EntityContext context)
         {
             this._context = context ?? throw new ArgumentNullException(nameof(context));
         }
@@ -45,14 +45,23 @@ namespace MessageApp.Infrastructure.Repositiories
             return await _context.Messages.AsNoTracking().ToListAsync();
         }
 
-        public async Task<PaginatedList<Message>> Query(int? contactId, string content, int pageNumber, int pageSize, string sortColumn, bool sortDescending)
+        public async Task<PaginatedList<Message>> Query(int? receiverId, string content, int pageNumber, int pageSize, string sortColumn, bool sortDescending, int? senderId, DateTime? sendDate, DateTime? readDate)
         {
-            var source = _context.Messages.AsNoTracking();
+            var source = _context.Messages
+                .Include(x => x.Receiver)
+                .Include(x => x.Receiver)
+                .AsNoTracking();
 
-            if (contactId != null)
-                source = source.Where(x => x.ReceiverId == contactId);
+            if (receiverId != null)
+                source = source.Where(x => x.ReceiverId == receiverId);
+            if (senderId != null)
+                source = source.Where(x => x.SenderId == senderId);
             if (!string.IsNullOrWhiteSpace(content))
                 source = source.Where(x => x.Content.Contains(content));
+            if (sendDate != null)
+                source = source.Where(x => x.SendDate == sendDate);
+            if (readDate != null)
+                source = source.Where(x => x.ReadDate == readDate);
 
             if (!string.IsNullOrWhiteSpace(sortColumn))
             {

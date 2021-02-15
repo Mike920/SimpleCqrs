@@ -30,9 +30,11 @@ namespace MessageApp.Controllers
         [Route("query")]
         [HttpPost]
         [ProducesResponseType(typeof(PaginatedList<MessageDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> Get(MessageQuery data)
         {
-            var result = await _mediator.Send(new GetMessagesQuery(data.ContactId, data.Content, data.PageNumber, data.PageSize, data.SortColumn, data.SortDescending));
+            var result = await _mediator.Send(new GetMessagesQuery(data.ReceiverId, data.Content, data.PageNumber, data.PageSize, 
+                data.SortColumn, data.SortDescending, data.SenderId, data.SendDate, data.ReadDate));
             return ApiContent(result);
         }
 
@@ -46,15 +48,15 @@ namespace MessageApp.Controllers
         //    return ApiContent(result);
         //}
 
-        //// POST api/<MessageController>
-        //[HttpPost]
-        //[ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-        //[ProducesResponseType( StatusCodes.Status422UnprocessableEntity)]
-        //public async Task<IActionResult> Post([FromBody] Message data)
-        //{
-        //    var result = await _mediator.Send(new CreateMessageCommand(data.Name));
-        //    return ApiContent(result);
-        //}
+        // POST api/<MessageController>
+        [HttpPost]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        public async Task<IActionResult> Send([FromBody] Message data)
+        {
+            var result = await _mediator.Send(new SendMessageCommand(data.Content, data.ReceiverId));
+            return ApiContent(result);
+        }
 
         //// PUT api/<MessageController>/5
         //[HttpPut("{messageId}")]

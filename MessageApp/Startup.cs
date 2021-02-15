@@ -18,6 +18,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MediatR;
 using MessageApp.Application.Contacts;
+using MessageApp.Domain.Mocks;
 
 namespace MessageApp
 {
@@ -33,10 +34,11 @@ namespace MessageApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<Infrastructure.Context.AppContext>(options =>
+            services.AddDbContext<Infrastructure.Context.EntityContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")),
              ServiceLifetime.Transient);
 
+            services.AddScoped<ICurrentUser, CurrentUserMock>();
             services.AddScoped<IContactRepository, ContactRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
 

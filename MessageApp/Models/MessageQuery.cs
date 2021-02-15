@@ -15,7 +15,10 @@ namespace MessageApp.Models
         public string SortColumn { get; set; }
 
         public string Content { get; set; }
-        public int? ContactId { get; set; }
+        public int? ReceiverId { get; set; }
+        public int? SenderId { get; set; }
         public bool SortDescending { get; set; }
+        public DateTime? SendDate { get; set; }
+        public DateTime? ReadDate { get; set; }
     }
 }
