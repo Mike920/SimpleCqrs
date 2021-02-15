@@ -6,7 +6,16 @@ namespace MessageApp.Domain.Entities
 {
     public class Contact
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        protected Contact()
+        {
+        }
+        public Contact(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+
+        public int Id { get; private set; }
+        public string Name { get; private set; }
     }
 }

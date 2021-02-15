@@ -7,10 +7,10 @@ namespace MessageApp.Application.Contacts
 {
     public class ContactDto
     {
-        public ContactDto(Contact contact)
+        public ContactDto(int id, string name)
         {
-            Id = contact.Id;
-            Name = contact.Name;
+            Id = id;
+            Name = name;
         }
 
         public int Id { get; set; }

@@ -9,5 +9,9 @@ namespace MessageApp.Domain.Interfaces
     public interface IContactRepository
     {
         Task<IEnumerable<Contact>> GetAll();
+        Task<Contact> Get(int id);
+        Task<int> Create(Contact contact);
+        Task Update(Contact contact);
+        Task Delete(int id);
     }
 }

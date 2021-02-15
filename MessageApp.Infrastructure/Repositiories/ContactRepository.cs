@@ -17,9 +17,36 @@ namespace MessageApp.Infrastructure.Repositiories
         {
             this._context = context ?? throw new ArgumentNullException(nameof(context));
         }
+
+        public async Task<int> Create(Contact contact)
+        {
+            await _context.Contacts.AddAsync(contact);
+            await _context.SaveChangesAsync();
+            return contact.Id;
+        }
+
+        public async Task Delete(int id)
+        {
+            var contact = await Get(id);
+            _context.Contacts.Remove(contact);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Contact> Get(int id)
+        {
+            return await _context.Contacts.FindAsync(id);
+        }
+
         public async Task<IEnumerable<Contact>> GetAll()
         {
             return await _context.Contacts.AsNoTracking().ToListAsync();
+        }
+
+        public async Task Update(Contact contact)
+        {
+            _context.Update(contact);
+            await _context.SaveChangesAsync();
         }
     }
 }

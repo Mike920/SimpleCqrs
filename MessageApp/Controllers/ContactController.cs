@@ -5,6 +5,8 @@ using System.Net;
 using System.Threading.Tasks;
 using MediatR;
 using MessageApp.Application.Contacts;
+using MessageApp.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,7 +15,7 @@ namespace MessageApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ContactController : ControllerBase
+    public class ContactController : BaseApiController
     {
         private readonly IMediator _mediator;
 
@@ -23,37 +25,54 @@ namespace MessageApp.Controllers
         }
 
         // GET: api/<ContactController>
-        [ProducesResponseType(typeof(List<ContactDto>), (int)HttpStatusCode.OK)]
         [HttpGet]
+        [ProducesResponseType(typeof(List<ContactDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Get()
         {
-            var contacts = await _mediator.Send(new GetContactsQuery());
-            return Ok(contacts);
+            var result = await _mediator.Send(new GetContactsQuery());
+            return ApiContent(result);
         }
 
         // GET api/<ContactController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        [ProducesResponseType(typeof(ContactDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            var result = await _mediator.Send(new GetContactDetailsQuery(id));
+            return ApiContent(result);
         }
 
         // POST api/<ContactController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [ProducesResponseType( StatusCodes.Status422UnprocessableEntity)]
+        public async Task<IActionResult> Post([FromBody] Contact data)
         {
+            var result = await _mediator.Send(new CreateContactCommand(data.Name));
+            return ApiContent(result);
         }
 
         // PUT api/<ContactController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{contactId}")]
+        [ProducesResponseType(typeof(int), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Put([FromRoute] int contactId, [FromBody] Contact data)
         {
+            var result = await _mediator.Send(new UpdateContactCommand(contactId, data.Name));
+            return ApiContent(result);
         }
 
         // DELETE api/<ContactController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete(int id)
         {
+            var result = await _mediator.Send(new DeleteContactCommand(id));
+            return ApiContent(result);
         }
     }
 }
