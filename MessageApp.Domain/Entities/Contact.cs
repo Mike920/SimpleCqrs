@@ -20,5 +20,6 @@ namespace MessageApp.Domain.Entities
         [Required]
         [MaxLength(50)]
         public string Name { get; private set; }
+        public virtual List<Message> Messages { get; set; }
     }
 }

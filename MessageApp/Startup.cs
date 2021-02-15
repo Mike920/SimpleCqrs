@@ -38,6 +38,7 @@ namespace MessageApp
              ServiceLifetime.Transient);
 
             services.AddScoped<IContactRepository, ContactRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

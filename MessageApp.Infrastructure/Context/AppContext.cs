@@ -14,5 +14,6 @@ namespace MessageApp.Infrastructure.Context
         }
 
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Message> Messages { get; set; }
     }
 }
