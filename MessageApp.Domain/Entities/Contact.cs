@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace MessageApp.Domain.Entities
@@ -16,6 +17,8 @@ namespace MessageApp.Domain.Entities
         }
 
         public int Id { get; private set; }
+        [Required]
+        [MaxLength(50)]
         public string Name { get; private set; }
     }
 }

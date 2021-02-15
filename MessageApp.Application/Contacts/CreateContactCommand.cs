@@ -8,6 +8,8 @@ using System.Threading;
 using System.Linq;
 using MessageApp.Domain.Entities;
 using MessageApp.Application.Models;
+using FluentValidation;
+using FluentValidation.Results;
 
 namespace MessageApp.Application.Contacts
 {
@@ -19,6 +21,16 @@ namespace MessageApp.Application.Contacts
         }
 
         public string Name { get; }
+
+        public ValidationResult Validate() => new Validator().Validate(this);
+
+        public class Validator : AbstractValidator<CreateContactCommand>
+        {
+            public Validator()
+            {
+                RuleFor(x => x.Name).NotEmpty().MaximumLength(50);
+            }
+        }
     }
 
     public class CreateContactCommandHandler : IRequestHandler<CreateContactCommand, Result<int?>>
@@ -31,6 +43,10 @@ namespace MessageApp.Application.Contacts
         }
         public async Task<Result<int?>> Handle(CreateContactCommand request, CancellationToken cancellationToken)
         {
+            var validationResult = request.Validate();
+            if (!validationResult.IsValid)
+                return Result.UnprocessableEntity<int?>(null, validationResult.ToString());
+
             var contact = new Contact(0, request.Name);
             var contactId = await _contactRepository.Create(contact);
 

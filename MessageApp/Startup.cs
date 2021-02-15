@@ -45,6 +45,11 @@ namespace MessageApp
             });
 
             services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(GetContactsQueryHandler).Assembly);
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
