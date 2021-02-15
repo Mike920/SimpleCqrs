@@ -67,7 +67,7 @@ namespace MessageApp.Controllers
 
         // DELETE api/<ContactController>/5
         [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(int), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
         {

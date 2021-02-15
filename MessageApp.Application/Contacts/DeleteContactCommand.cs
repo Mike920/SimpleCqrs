@@ -30,12 +30,12 @@ namespace MessageApp.Application.Contacts
         }
         public async Task<Result<object>> Handle(DeleteContactCommand request, CancellationToken cancellationToken)
         {
-            if(_contactRepository.Get(request.Id) == null)
+            if((await _contactRepository.Get(request.Id)) == null)
                 return Result.NotFound<object>(null);
 
             await _contactRepository.Delete(request.Id);
 
-            return Result.Ok<object>(null);
+            return Result.NoContent<object>(null);
         }
     }
 }

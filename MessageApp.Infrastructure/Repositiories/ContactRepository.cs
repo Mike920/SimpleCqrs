@@ -35,7 +35,7 @@ namespace MessageApp.Infrastructure.Repositiories
 
         public async Task<Contact> Get(int id)
         {
-            return await _context.Contacts.FindAsync(id);
+            return await _context.Contacts.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IEnumerable<Contact>> GetAll()

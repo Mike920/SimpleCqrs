@@ -34,7 +34,8 @@ namespace MessageApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<Infrastructure.Context.AppContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")),
+             ServiceLifetime.Transient);
 
             services.AddScoped<IContactRepository, ContactRepository>();
 

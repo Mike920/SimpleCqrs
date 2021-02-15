@@ -49,7 +49,7 @@ namespace MessageApp.Application.Contacts
             if (!validationResult.IsValid)
                 return Result.UnprocessableEntity<object>(null, validationResult.ToString());
 
-            if (_contactRepository.Get(request.Id) == null)
+            if ((await _contactRepository.Get(request.Id)) == null)
                 return Result.NotFound<object>(null);
 
             var contact = new Contact(request.Id,request.Name);
