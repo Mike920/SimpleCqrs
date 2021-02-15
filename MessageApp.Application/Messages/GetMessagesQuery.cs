@@ -8,10 +8,12 @@ using System.Threading;
 using System.Linq;
 using MessageApp.Application.Models;
 using MessageApp.Domain.Models;
+using FluentValidation.Results;
+using FluentValidation;
 
 namespace MessageApp.Application.Messages
 {
-    public class GetMessagesQuery : IRequest<Result<List<MessageDto>>>
+    public class GetMessagesQuery : IRequest<Result<PaginatedList<MessageDto>>>
     {
         public GetMessagesQuery(int? contactId, string content, int pageNumber, int pageSize, string sortColumn, bool sortDescending)
         {
@@ -29,9 +31,20 @@ namespace MessageApp.Application.Messages
         public int PageSize { get; }
         public string SortColumn { get; }
         public bool SortDescending { get; }
+
+        public ValidationResult Validate() => new Validator().Validate(this);
+
+        public class Validator : AbstractValidator<GetMessagesQuery>
+        {
+            public Validator()
+            {
+                RuleFor(x => x.PageNumber).GreaterThan(0);
+                RuleFor(x => x.PageSize).GreaterThan(0);
+            }
+        }
     }
 
-    public class GetMessagesQueryHandler : IRequestHandler<GetMessagesQuery, Result<List<MessageDto>>>
+    public class GetMessagesQueryHandler : IRequestHandler<GetMessagesQuery, Result<PaginatedList<MessageDto>>>
     {
         private readonly IMessageRepository _messageRepository;
 
@@ -39,13 +52,17 @@ namespace MessageApp.Application.Messages
         {
             this._messageRepository = messageRepository;
         }
-        public async Task<Result<List<MessageDto>>> Handle(GetMessagesQuery request, CancellationToken cancellationToken)
+        public async Task<Result<PaginatedList<MessageDto>>> Handle(GetMessagesQuery request, CancellationToken cancellationToken)
         {
+            var validationResult = request.Validate();
+            if (!validationResult.IsValid)
+                return Result.UnprocessableEntity<PaginatedList<MessageDto>>(null, validationResult.ToString());
+
             var queryResult = (await _messageRepository.Query(request.ContactId, request.Content, request.PageNumber, request.PageSize, request.SortColumn, request.SortDescending));
 
-            var messages = queryResult.Items.Select(x => new MessageDto(x.Id, x.Content, x.ContactId)).ToList();
+            var messages = queryResult.Items.Select(x => new MessageDto(x.Id, x.Content, x.ReceiverId)).ToList();
             var result = new PaginatedList<MessageDto>(messages, queryResult.TotalCount, queryResult.PageNumber, queryResult.TotalPages);
-            return Result.Ok(messages);
+            return Result.Ok(result);
         }
     }
 }

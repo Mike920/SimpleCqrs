@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace MessageApp.Domain.Entities
@@ -17,9 +18,15 @@ namespace MessageApp.Domain.Entities
         }
 
         public int Id { get; private set; }
+
         [Required]
         [MaxLength(50)]
         public string Name { get; private set; }
-        public virtual List<Message> Messages { get; set; }
+
+        [InverseProperty(nameof(Message.Receiver))]
+        public virtual List<Message> MessagesReceived { get; set; }
+
+        [InverseProperty(nameof(Message.Sender))]
+        public virtual List<Message> MessagesSent { get; set; }
     }
 }

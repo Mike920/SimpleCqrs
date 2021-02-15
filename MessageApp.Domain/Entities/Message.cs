@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace MessageApp.Domain.Entities
@@ -10,19 +11,26 @@ namespace MessageApp.Domain.Entities
         protected Message()
         {
         }
-        public Message(int id, string content, int contactId)
+        public Message(int id, string content, int receiverId)
         {
             Id = id;
             Content = content;
-            ContactId = contactId;
+            ReceiverId = receiverId;
         }
 
         public int Id { get; private set; }
         [Required]
-        [MaxLength(50)]
+        [MaxLength(1000)]
         public string Content { get; private set; }
+        public DateTime SendDate { get; private set; }
+        public DateTime? ReadDate { get; private set; }
 
-        public int ContactId { get; private set; }
-        public virtual Contact Contact { get; private set; }
+        public int ReceiverId { get; private set; }
+        [ForeignKey(nameof(ReceiverId))]
+        public virtual Contact Receiver { get; private set; }
+        
+        public int SenderId { get; private set; }
+        [ForeignKey(nameof(SenderId))]
+        public virtual Contact Sender { get; private set; }
     }
 }

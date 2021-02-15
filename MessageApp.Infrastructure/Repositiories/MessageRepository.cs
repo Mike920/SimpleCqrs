@@ -50,7 +50,7 @@ namespace MessageApp.Infrastructure.Repositiories
             var source = _context.Messages.AsNoTracking();
 
             if (contactId != null)
-                source = source.Where(x => x.ContactId == contactId);
+                source = source.Where(x => x.ReceiverId == contactId);
             if (!string.IsNullOrWhiteSpace(content))
                 source = source.Where(x => x.Content.Contains(content));
 

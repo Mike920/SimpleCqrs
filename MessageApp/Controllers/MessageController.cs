@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MediatR;
 using MessageApp.Application.Contacts;
 using MessageApp.Application.Messages;
+using MessageApp.Domain.Models;
 using MessageApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,8 +27,9 @@ namespace MessageApp.Controllers
         }
 
         // GET: api/<MessageController>
-        [HttpGet]
-        [ProducesResponseType(typeof(List<MessageDto>), StatusCodes.Status200OK)]
+        [Route("query")]
+        [HttpPost]
+        [ProducesResponseType(typeof(PaginatedList<MessageDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(MessageQuery data)
         {
             var result = await _mediator.Send(new GetMessagesQuery(data.ContactId, data.Content, data.PageNumber, data.PageSize, data.SortColumn, data.SortDescending));
