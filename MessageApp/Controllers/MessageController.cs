@@ -52,7 +52,6 @@ namespace MessageApp.Controllers
         // PUT api/<MessageController>/5
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(int), StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> MarkAsRead([FromRoute] int id)
         {

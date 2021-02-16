@@ -3,13 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageApp", "MessageApp\MessageApp.csproj", "{5FBAE0F5-53CB-4DA4-A00A-07A720E0983A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageApp.Api", "MessageApp\MessageApp.Api.csproj", "{5FBAE0F5-53CB-4DA4-A00A-07A720E0983A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageApp.Application", "MessageApp.Application\MessageApp.Application.csproj", "{71DA1D76-3B58-4066-A67E-AF31530ED657}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageApp.Infrastructure", "MessageApp.Infrastructure\MessageApp.Infrastructure.csproj", "{A68E8432-96B3-48F6-BBA4-B49308E66A84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageApp.Infrastructure", "MessageApp.Infrastructure\MessageApp.Infrastructure.csproj", "{A68E8432-96B3-48F6-BBA4-B49308E66A84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageApp.Domain", "MessageApp.Domain\MessageApp.Domain.csproj", "{D4EC3B7A-4A31-493A-927F-538DB51E76D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageApp.Domain", "MessageApp.Domain\MessageApp.Domain.csproj", "{D4EC3B7A-4A31-493A-927F-538DB51E76D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B8D8D9DC-C799-4B1F-920D-8593DAF7ABC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageApp.Application.Tests", "MessageApp.Application.Tests\MessageApp.Application.Tests.csproj", "{38D5EFDB-A6DE-402E-85C6-BBD257AC390D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +37,16 @@ Global
 		{D4EC3B7A-4A31-493A-927F-538DB51E76D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4EC3B7A-4A31-493A-927F-538DB51E76D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4EC3B7A-4A31-493A-927F-538DB51E76D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38D5EFDB-A6DE-402E-85C6-BBD257AC390D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38D5EFDB-A6DE-402E-85C6-BBD257AC390D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38D5EFDB-A6DE-402E-85C6-BBD257AC390D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38D5EFDB-A6DE-402E-85C6-BBD257AC390D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{38D5EFDB-A6DE-402E-85C6-BBD257AC390D} = {B8D8D9DC-C799-4B1F-920D-8593DAF7ABC6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C868C78F-E120-4643-9F16-194C1524EF95}

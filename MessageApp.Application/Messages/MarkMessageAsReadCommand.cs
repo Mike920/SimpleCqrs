@@ -21,16 +21,7 @@ namespace MessageApp.Application.Messages
         }
 
         public int Id { get; }
-
-        public ValidationResult Validate() => new Validator().Validate(this);        
-
-        public class Validator : AbstractValidator<MarkMessageAsReadCommand>
-        {
-            public Validator()
-            {
-                RuleFor(x => x.Id).GreaterThan(0);
-            }
-        }
+            
     }
 
     public class MarkMessageAsReadCommandHandler : IRequestHandler<MarkMessageAsReadCommand,Result<object>>
@@ -43,9 +34,6 @@ namespace MessageApp.Application.Messages
         }
         public async Task<Result<object>> Handle(MarkMessageAsReadCommand request, CancellationToken cancellationToken)
         {
-            var validationResult = request.Validate();
-            if (!validationResult.IsValid)
-                return Result.UnprocessableEntity<object>(null, validationResult.ToString());
 
             var message = await _messageRepository.Get(request.Id);
             if (message == null)
