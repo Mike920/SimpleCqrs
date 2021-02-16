@@ -14,11 +14,9 @@ namespace MessageApp.Infrastructure.Tests
 {
     public class MessageRepositoryTests : BaseTest
     {
-        //Moq.Mock<EntityContext> _entityContext;
         MessageRepository _messageRepository;
         public MessageRepositoryTests()
         {
-           // _entityContext = new Mock<EntityContext>();
             _messageRepository = new MessageRepository(Context);
         }
 
