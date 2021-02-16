@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B8D8D9DC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageApp.Application.Tests", "MessageApp.Application.Tests\MessageApp.Application.Tests.csproj", "{38D5EFDB-A6DE-402E-85C6-BBD257AC390D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageApp.Infrastructure.Tests", "MessageApp.Infrastructure.Tests\MessageApp.Infrastructure.Tests.csproj", "{CDDD17C6-3C78-4147-8311-50389DFA86DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,12 +43,17 @@ Global
 		{38D5EFDB-A6DE-402E-85C6-BBD257AC390D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38D5EFDB-A6DE-402E-85C6-BBD257AC390D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38D5EFDB-A6DE-402E-85C6-BBD257AC390D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDDD17C6-3C78-4147-8311-50389DFA86DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDDD17C6-3C78-4147-8311-50389DFA86DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDDD17C6-3C78-4147-8311-50389DFA86DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDDD17C6-3C78-4147-8311-50389DFA86DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{38D5EFDB-A6DE-402E-85C6-BBD257AC390D} = {B8D8D9DC-C799-4B1F-920D-8593DAF7ABC6}
+		{CDDD17C6-3C78-4147-8311-50389DFA86DC} = {B8D8D9DC-C799-4B1F-920D-8593DAF7ABC6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C868C78F-E120-4643-9F16-194C1524EF95}
